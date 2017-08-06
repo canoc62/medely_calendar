@@ -1,0 +1,9 @@
+table {
+  margin-top: -10px;
+}
+
+td {
+  padding-bottom: 0.75em;
+  padding-left: 40px;
+  text-align: right;
+}
