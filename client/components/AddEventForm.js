@@ -31,22 +31,18 @@ class AddEventForm extends Component {
           return false;
         }
     if (!this.props.events[this.state.startTime]) {
-      // const eventStartTime = parseInt(this.state.startTime);
-      // const eventEndTime = parseInt(this.state.endTime);
 
       for (let event in this.props.events) {
         const currEvent = this.props.events[event];
         const currEventStartTime = parseInt(currEvent.start);
 
         if (eventStartTime < currEventStartTime && eventEndTime > currEventStartTime) {
-          console.log('falllse tits');
           return false;
         }
       }
 
       return true;
     } else {
-      console.log('falllse');
       return false;
     }
   }
