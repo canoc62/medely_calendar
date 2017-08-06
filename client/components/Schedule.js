@@ -2,14 +2,14 @@ import React from 'react';
 import Event from './Event';
 
 const Schedule = ({events}) => {
-  console.log('EVENNTTSS: ', events);
   const eventComponents = Object.keys(events).reduce((acc, curr) => {
     const currEvent = events[curr];
     const newEventComponent = (
     <Event 
       eventName={currEvent.eventName}
       start={parseInt(currEvent.start)}
-      height={currEvent.duration} 
+      height={currEvent.duration}
+      key={currEvent.eventName+currEvent.start+currEvent.duration}
     />);
     return [...acc, newEventComponent];
   }, []);

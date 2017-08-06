@@ -33,14 +33,4 @@ const styles = {
   }
 }
 
-/* <div>
-        <Button style={{position: "relative", float: "right", margin: "-70px 90px 0 0"}} bsStyle="primary" bsSize="large">New Event</Button>
-        <TimeTable />
-        <div style={styles.jumboStyle}>
-          <Event start={0} height={30}/>
-          <Event start={30} height={50}/>
-          <Event start={120} height={90}/>
-        </div>
-      </div> */
-
 export default App;
