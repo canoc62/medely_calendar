@@ -1,12 +1,13 @@
 import { ADD_EVENT } from './constants';
 
-export function addEvent(eventName, startTime, endTime) {
+export function addEvent(eventName, start, end) {
   return {
     type: ADD_EVENT,
     eventData: {
       eventName,
       start,
-      end
+      end,
+      duration: (parseInt(end) - parseInt(start)).toString()
     }
   }
 }

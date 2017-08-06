@@ -1,8 +1,22 @@
 import React from 'react';
+import Event from './Event';
 
-const Schedule = (props) => {
+const Schedule = ({events}) => {
+  console.log('EVENNTTSS: ', events);
+  const eventComponents = Object.keys(events).reduce((acc, curr) => {
+    const currEvent = events[curr];
+    const newEventComponent = (
+    <Event 
+      eventName={currEvent.eventName}
+      start={parseInt(currEvent.start)}
+      height={currEvent.duration} 
+    />);
+    return [...acc, newEventComponent];
+  }, []);
+
   return (
     <div style={styles.jumboStyle}>
+      {eventComponents}
     </div>
   );
 }

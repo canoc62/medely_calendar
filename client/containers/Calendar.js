@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import TimeTable from './../components/TimeTable';
 import Event from './../components/Event';
@@ -31,19 +31,15 @@ class Calendar extends Component {
       <div>
         <Button style={{position: "relative", float: "right", margin: "-70px 90px 0 0"}} bsStyle="primary" bsSize="large" onClick={this.open}>New Event</Button>
         <TimeTable />
-        <Schedule />
+        <Schedule events={this.props.events}/>
         <AddEventOverlay showAddEventOverlay={this.state.showAddEventOverlay} close={this.close}/>
       </div>
     );
   }
 }
 
-// function mapStateToProps(props) {
-//   return props;
-// }
+function mapStateToProps({ events }) {
+  return { events };
+}
 
-// function mapDispatchToProps(props) {
-//   return props;
-// }
-
-export default Calendar;//connect(mapStateToProps, mapDispatchToProps)(Calendar);
+export default connect(mapStateToProps)(Calendar);

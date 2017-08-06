@@ -10,47 +10,65 @@ class AddEventForm extends Component {
     this.state = {
       eventName: '',
       startTime: '',
-      endTime: ''
+      endTime: '',
+      invalidInput: false
     }
 
     this.handleEventSubmit = this.handleEventSubmit.bind(this);
     this.handleEventNameChange = this.handleEventNameChange.bind(this);
     this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
-    this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
+    this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
     this.validateEvent = this.validateEvent.bind(this);
+    this.displayError = this.displayError.bind(this);
   }
 
   validateEvent() {
+    const eventStartTime = parseInt(this.state.startTime);
+    const eventEndTime = parseInt(this.state.endTime);
+
+    if (eventStartTime < 0 || eventStartTime >= 720 ||
+        eventEndTime <= 0 || eventEndTime > 720 ) {
+          return false;
+        }
     if (!this.props.events[this.state.startTime]) {
-      const eventEndTime = parseInt(this.state.endTime);
+      // const eventStartTime = parseInt(this.state.startTime);
+      // const eventEndTime = parseInt(this.state.endTime);
 
       for (let event in this.props.events) {
         const currEvent = this.props.events[event];
+        const currEventStartTime = parseInt(currEvent.start);
 
-        if (eventEndTime > parseInt(currEvent.start)) {
+        if (eventStartTime < currEventStartTime && eventEndTime > currEventStartTime) {
+          console.log('falllse tits');
           return false;
         }
       }
 
       return true;
     } else {
+      console.log('falllse');
       return false;
     }
   }
 
   handleEventSubmit(e) {
     // check if event start and end times overlap with another event
-
-    if (validateEvent()) {
+    console.log('clicking!', this.state.endTime);
+    if (this.validateEvent()) {
+      console.log('in here!');
       this.props.addEvent(
         this.state.eventName,
         this.state.startTime,
         this.state.endTime
       );
       // need to actually add event in ui
-    } else {
+      this.props.close();
+    } 
+    else {
       // do something, dispatch action, change compinent state for fail event addition. display message
+      this.setState({ invalidInput: true })
     }
+    //this.props.close();
   }
 
   handleEventNameChange(e) {
@@ -65,9 +83,19 @@ class AddEventForm extends Component {
     this.setState({endTime: e.target.value});
   }
 
+  displayError() {
+    if (this.state.invalidInput) {
+      return "block";
+    }
+    return "none";
+  }
+
   render() {
     return (
       <form>
+        <p style={{display: this.displayError()}}>
+          Error you already have an event scheduled for that time
+        </p>
         <FormControl
           type="text"
           value={this.state.eventName}
@@ -90,7 +118,7 @@ class AddEventForm extends Component {
           style={{display: "inline-block", width: '150px', margin: '0 auto'}}
         />
         <Button onClick={this.props.close}>Cancel</Button>
-        <Button bsStyle="primary" onClick={this.handleSubmitEvent}>Save</Button>
+        <Button bsStyle="primary" onClick={this.handleEventSubmit}>Save</Button>
       </form>
     );
   }
