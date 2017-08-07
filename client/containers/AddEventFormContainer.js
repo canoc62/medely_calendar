@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AddEventForm from './../components/AddEventForm';
 import { connect } from 'react-redux';
 import { addEvent } from './../actions/events';
+import { SECONDS_IN_MINUTE, SECONDS_IN_NINE_HOURS} from './../actions/constants';
 
 class AddEventFormContainer extends Component {
   constructor() {
@@ -9,8 +10,8 @@ class AddEventFormContainer extends Component {
 
     this.state = {
       eventName: '',
-      startTime: 0,
-      endTime: 0,
+      startTime: 32400,
+      endTime: 32460,
       invalidInput: false
     }
 
@@ -24,20 +25,26 @@ class AddEventFormContainer extends Component {
   }
 
   validateEvent() {
-    const eventStartTime = parseInt(this.state.startTime);
-    const eventEndTime = parseInt(this.state.endTime);
+    console.log('time state: ', this.state.startTime, ' ', this.state.endTime);
+    console.log('duration: ', (this.state.endTime - this.state.startTime)/60);
+    if (this.state.startTime >= this.state.endTime) {
+      return false;
+    }
+    // const eventStartTime = this.state.startTime.toString();
+    // const eventEndTime = this.state.endTime.toString();
+    const adjustedStartTime = (this.state.startTime - SECONDS_IN_NINE_HOURS)/SECONDS_IN_MINUTE;
+    const adjustedEndTime = (this.state.endTime - SECONDS_IN_NINE_HOURS)/SECONDS_IN_MINUTE;
 
-    if (eventStartTime < 0 || eventStartTime >= 720 ||
-        eventEndTime <= 0 || eventEndTime > 720 ) {
-          return false;
-        }
-    if (!this.props.events[this.state.startTime]) {
-
+    if (!this.props.events[adjustedStartTime]) {
+      console.log('in if');
       for (let event in this.props.events) {
         const currEvent = this.props.events[event];
-        const currEventStartTime = parseInt(currEvent.start);
-
-        if (eventStartTime < currEventStartTime && eventEndTime > currEventStartTime) {
+        const currEventStartTime = currEvent.start;
+        console.log('adjustedStartTIme', adjustedStartTime);
+        console.log('adjustedEndTime', adjustedEndTime);
+        console.log('currEventStartTime', currEventStartTime);
+        if (adjustedStartTime < currEventStartTime && 
+          adjustedEndTime > currEventStartTime) {
           return false;
         }
       }
@@ -67,19 +74,17 @@ class AddEventFormContainer extends Component {
   }
 
   handleStartTimeChange(time) {
+    console.log('start time: ', time);
     this.setState({startTime: time});
   }
 
   handleEndTimeChange(time) {
+    console.log('end time: ', time);
     this.setState({endTime: time});
   }
 
   disabledSave() {
-    return (
-      this.state.eventName === '' ||
-      this.state.startTime === '' ||
-      this.state.endTime === ''
-    );
+    return this.state.eventName === '';
   }
 
   displayError() {
