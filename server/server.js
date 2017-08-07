@@ -7,11 +7,18 @@ const webpack = require('webpack');
 const webpackConfig = require('./../webpack.config.js');
 const compiler = webpack(webpackConfig);
 
-app.use(require('webpack-dev-middleware')(compiler, {
-  hot: true,
-  publicPath: webpackConfig.output.publicPath
-}))
-app.use(require('webpack-hot-middleware')(compiler));
+if (process.env.NODE_ENV !== 'PRODUCTION') {
+  const webpack = require('webpack');
+  const webpackConfig = require('./../webpack.config.js');
+  const compiler = webpack(webpackConfig);
+
+  app.use(require('webpack-dev-middleware')(compiler, {
+    hot: true,
+    publicPath: webpackConfig.output.publicPath
+  }))
+  app.use(require('webpack-hot-middleware')(compiler));
+}
+
 app.use(express.static(__dirname + './../client/static'));
 
 app.get('*', (req, res) => {
