@@ -10,7 +10,7 @@ export function addEvent(eventName, start, end) {
       eventName,
       start: (start - SECONDS_IN_NINE_HOURS)/SECONDS_IN_MINUTE,
       end: end - SECONDS_IN_NINE_HOURS,
-      duration: (end - start)/SECONDS_IN_MINUTE //(parseInt(end) - parseInt(start)).toString()
+      duration: (end - start)/SECONDS_IN_MINUTE
     }
   }
 }
