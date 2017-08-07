@@ -9,8 +9,8 @@ class AddEventFormContainer extends Component {
 
     this.state = {
       eventName: '',
-      startTime: '',
-      endTime: '',
+      startTime: 0,
+      endTime: 0,
       invalidInput: false
     }
 
@@ -66,12 +66,12 @@ class AddEventFormContainer extends Component {
     this.setState({eventName: e.target.value});
   }
 
-  handleStartTimeChange(e) {
-    this.setState({startTime: e.target.value});
+  handleStartTimeChange(time) {
+    this.setState({startTime: time});
   }
 
-  handleEndTimeChange(e) {
-    this.setState({endTime: e.target.value});
+  handleEndTimeChange(time) {
+    this.setState({endTime: time});
   }
 
   disabledSave() {
