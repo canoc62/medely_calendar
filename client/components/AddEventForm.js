@@ -36,21 +36,6 @@ const AddEventForm = (props) => {
           value={props.endTime}
           onChange={props.handleEndTimeChange}
           style={{display: "inline-block", width: '160px'}}/>
-        {/* <FormControl
-          type="text"
-          value={props.startTime}
-          placeholder="Start Time"
-          onChange={props.handleStartTimeChange}
-          style={{display: "inline-block", width: '160px', marginRight: '28px'}}
-        />
-        <FormControl
-          type="text"
-          value={props.endTime}
-          placeholder="End Time"
-          onChange={props.handleEndTimeChange}
-          style={{display: "inline-block", width: '160px'}}
-        /> */}
-
       </div>
       <div id="event-form-button-container">
         <Button 
