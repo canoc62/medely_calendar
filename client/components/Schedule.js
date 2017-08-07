@@ -15,22 +15,10 @@ const Schedule = ({events}) => {
   }, []);
 
   return (
-    <div style={styles.jumboStyle}>
+    <div id="events-container">
       {eventComponents}
     </div>
   );
-}
-
-const styles = {
-  jumboStyle: {
-    height: '720px',
-    width: '620px',
-    boxSizing: 'border-box',
-    padding: '0px 10px',
-    backgroundColor: 'blue',
-    margin: '0 auto',
-    positon: 'absolute'
-  }
 }
 
 export default Schedule;

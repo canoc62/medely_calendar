@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AddEventForm from './../components/AddEventForm';
 import { connect } from 'react-redux';
-import { FormControl, FormGroup, Button } from 'react-bootstrap';
 import { addEvent } from './../actions/events';
 
 class AddEventFormContainer extends Component {
@@ -21,6 +20,7 @@ class AddEventFormContainer extends Component {
     this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
     this.validateEvent = this.validateEvent.bind(this);
     this.displayError = this.displayError.bind(this);
+    this.disabledSave = this.disabledSave.bind(this);
   }
 
   validateEvent() {
@@ -74,6 +74,14 @@ class AddEventFormContainer extends Component {
     this.setState({endTime: e.target.value});
   }
 
+  disabledSave() {
+    return (
+      this.state.eventName === '' ||
+      this.state.startTime === '' ||
+      this.state.endTime === ''
+    );
+  }
+
   displayError() {
     if (this.state.invalidInput) {
       return "block";
@@ -93,6 +101,7 @@ class AddEventFormContainer extends Component {
         handleEndTimeChange={this.handleEndTimeChange}
         handleEventSubmit={this.handleEventSubmit}
         close={this.props.close}
+        disabledSave={this.disabledSave}
       />
     );
   }
